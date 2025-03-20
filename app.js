@@ -5,7 +5,7 @@ const app = express();
 // Middleware Imports
 const corsMiddleware = require("./middleware/corsMiddleware");
 const helmetMiddleware = require("./middleware/helmetMiddleware");
-const passportMiddleware = require("./middleware/passportMiddleware");
+const {passport} = require("./config/passport");
 const staticMiddleware = require("./middleware/staticMiddleware");
 const cookieParserMiddleware = require("./middleware/cookieParserMiddleware");
 const bodyParserMiddleware = require("./middleware/bodyParserMiddleware");
@@ -14,19 +14,19 @@ app.use(cookieParserMiddleware);
 app.use(bodyParserMiddleware);
 app.use(corsMiddleware);
 app.use(helmetMiddleware); // Uncomment when needed
-app.use(passportMiddleware);
+app.use(passport.initialize());
 app.use(staticMiddleware);
 // View Engine Setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 // Routers
 const loginRouter = require("./routes/loginRouter");
+const signupRouter = require("./routes/signupRouter")
 
 // Routes
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
-app.use("/dashboard", dashboardRouter);
-app.use("/message", messageRouter);
+app.use("/signup", signupRouter)
 
 // Logout Route
 app.post("/logout", (req, res) => {
