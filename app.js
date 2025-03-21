@@ -21,9 +21,11 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 // Routers
 const loginRouter = require("./routes/loginRouter");
-const signupRouter = require("./routes/signupRouter")
+const signupRouter = require("./routes/signupRouter");
+const dashboardRouter = require("./routes/dashboardRouter");
 
 // Routes
+app.use("/", dashboardRouter)
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signupRouter)
