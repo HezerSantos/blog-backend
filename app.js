@@ -23,12 +23,13 @@ app.set("view engine", "ejs");
 const loginRouter = require("./routes/loginRouter");
 const signupRouter = require("./routes/signupRouter");
 const indexRouter = require("./routes/indexRouter");
+const dashboardRouter = require("./routes/dashboardRouter");
 
 // Routes
 app.use("/", indexRouter)
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
-app.use("/signup", signupRouter)
+app.use("/dashboard", dashboardRouter)
 
 // Logout Route
 app.post("/logout", (req, res) => {
