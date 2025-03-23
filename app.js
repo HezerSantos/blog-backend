@@ -33,7 +33,13 @@ app.use("/dashboard", dashboardRouter)
 
 // Logout Route
 app.post("/logout", (req, res) => {
-  res.clearCookie("token", { path: "/" });
+  res.clearCookie("token", { 
+    path: "/",
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  });
+  console.log("Looged Out")
   res.json({ message: "Logged out successfully" });
 });
 
