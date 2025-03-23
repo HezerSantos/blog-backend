@@ -38,23 +38,26 @@ exports.postBlog = [
         const image = req.file
         const { title, synopsis, text } = req.body
         try{
+            // console.log(image)
+            if (image){
+                const optimizedImage = await sharp(image.buffer)
+                    .resize(800)
+                    .webp({ quality: 80})
+                    .toBuffer();
 
-            const optimizedImage = await sharp(image.buffer)
-                .resize(800)
-                .webp({ quality: 80})
-                .toBuffer();
-
-            const { data: uploadData, error: uploadError } = await supabase
-                .storage
-                .from("images")
-                .upload(`${req.user.id}/${image.originalname}`, optimizedImage.buffer, {
-                    cacheControl: '3600',
-                    upsert: false
-                })
-            if (uploadError){
-                console.error("upload Error:", uploadError)
-                throw new Error()
+                const { data: uploadData, error: uploadError } = await supabase
+                    .storage
+                    .from("images")
+                    .upload(`${req.user.id}/${image.originalname}`, optimizedImage, {
+                        cacheControl: '3600',
+                        upsert: false
+                    })
+                if (uploadError){
+                    console.error("upload Error:", uploadError)
+                    throw new Error()
+                }
             }
+
             const {id} = await prisma.blog.create({
                 data: {
                     title: title,
@@ -69,6 +72,20 @@ exports.postBlog = [
                     blogId: id
                 }
             })
+
+            if(image) {
+                const { data: imageUrl } = await supabase
+                .storage
+                .from("images")
+                .getPublicUrl(`${req.user.id}/${image.originalname}`)
+                
+                await prisma.image.create({
+                    data: {
+                        url: image? imageUrl.publicUrl : "",
+                        blogId: id
+                    }
+                })
+            }
             console.log("File Upload Success")
             return res.json({
                 message: "Data received"

@@ -1,8 +1,9 @@
 const { Router } = require("express")
 const { passport } = require("../config/passport")
-const { getIndex } = require("../controllers/indexController")
+const { getIndex, getBlogs } = require("../controllers/indexController")
 const indexRouter = Router()
 
 indexRouter.get("/", passport.authenticate("jwt", {session: false}), getIndex)
 
+indexRouter.get("/blogs", getBlogs)
 module.exports = indexRouter

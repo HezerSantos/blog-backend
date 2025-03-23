@@ -32,7 +32,6 @@ exports.validateBlog = [
             ])
             if(req.file){
                 if (!allowedTypes.has(req.file.mimetype)){
-                    console.log(req.file.mimetype)
                     throw new Error("Invalid image type")
                 }
                 return true
