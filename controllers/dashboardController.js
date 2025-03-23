@@ -5,3 +5,13 @@ exports.getDashboard = (req, res) => {
         }
     })
 }
+
+exports.postBlog = (req, res) => {
+    const image = req.file
+    console.log(image)
+    console.log(req.body)
+
+    res.json({
+        message: "Data received"
+    })
+}
