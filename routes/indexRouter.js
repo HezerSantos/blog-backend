@@ -5,5 +5,5 @@ const indexRouter = Router()
 
 indexRouter.get("/", passport.authenticate("jwt", {session: false}), getIndex)
 
-indexRouter.get("/blogs", getBlogs)
+
 module.exports = indexRouter

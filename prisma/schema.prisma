@@ -34,7 +34,7 @@ model Blog {
 
 model Passage {
   id Int @id @default(autoincrement())
-  text String
+  text String @db.Text
   blogId Int
   blog Blog @relation(fields: [blogId], references: [id])
 }

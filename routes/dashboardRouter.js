@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const { getDashboard, postBlog } = require("../controllers/dashboardController")
+const { getDashboard, postBlog, getUserBlogs } = require("../controllers/dashboardController")
 const { passport } = require("../config/passport")
 const dashboardRouter = Router()
 const multer  = require('multer')
@@ -11,4 +11,5 @@ dashboardRouter.post("/create-blog",
     passport.authenticate("jwt", {session: false}), 
     upload.single('file'), 
     postBlog)
+dashboardRouter.get("/blogs", passport.authenticate("jwt", {session: false}), getUserBlogs)
 module.exports = dashboardRouter

@@ -38,7 +38,6 @@ exports.postBlog = [
         const image = req.file
         const { title, synopsis, text } = req.body
         try{
-            // console.log(image)
             if (image){
                 const optimizedImage = await sharp(image.buffer)
                     .resize(800)
@@ -98,3 +97,26 @@ exports.postBlog = [
         }
     }
 ]
+
+exports.getUserBlogs = async(req, res) => {
+    try{
+        const blogs = await prisma.blog.findMany({
+            where: {
+                userId: req.user.id
+            },
+            include: {
+                image: true,
+                passage: true
+            }
+        })
+        return res.json({
+            blogs: blogs
+        })
+    } catch(e) {
+        return res.status(400).json({
+            errors: "error fetching blogs"
+        })
+    }
+
+    
+}
