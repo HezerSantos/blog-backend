@@ -25,6 +25,7 @@ const signupRouter = require("./routes/signupRouter");
 const indexRouter = require("./routes/indexRouter");
 const dashboardRouter = require("./routes/dashboardRouter");
 const blogRouter = require("./routes/blogRouter");
+const settingsRouter = require("./routes/settingsRouter");
 
 // Routes
 app.use("/", indexRouter)
@@ -32,6 +33,7 @@ app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 app.use("/dashboard", dashboardRouter)
 app.use("/blogs", blogRouter)
+app.use("/settings", settingsRouter)
 
 // Logout Route
 app.post("/logout", (req, res) => {
