@@ -8,10 +8,20 @@ exports.getBlogs = async(req, res) => {
                 passage: true
             }
         })
-
-        res.json({
-            blogs: blogs
+        const users = await prisma.user.findMany({
+            select:{
+                id: true,
+                username: true
+            }
         })
+        // const map = new Map(users.map(item => [item.id, item.username]));
+        // const usersObj = Object.fromEntries(map);
+        res.json({
+            blogs: blogs,
+            users: users
+        })
+
+       
     } catch(e) {
         console.error(e)
         return res.status(400).json({
