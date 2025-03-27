@@ -8,7 +8,8 @@ const sharp = require('sharp')
 exports.getDashboard = (req, res) => {
     res.json({
         user: {
-            username: req.user.username
+            username: req.user.username,
+            id: req.user.id
         }
     })
 }

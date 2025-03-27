@@ -60,3 +60,72 @@ exports.getBlogById = async(req, res) => {
         })
     }
 }
+
+exports.editBlogById = async(req, res) => {
+    const { userId, blogId } = req.params
+    if(parseInt(userId) !== req.user.id){
+        return res.status(401).json("Unauthorized")
+    }
+    
+
+    try{
+        const blog = await prisma.blog.findUnique({
+            where: {
+                id: parseInt(blogId)
+            },
+            include:{
+                passage: true
+            }
+        })
+        return res.json({
+            blog: blog
+        })
+    } catch(e){
+        console.error(e)
+    }
+}
+
+exports.updateBlogById = async(req, res) => {
+    const { userId, blogId } = req.params
+    const { title, synopsis, text } = req.body
+    const file = req.file
+    if(parseInt(userId) !== req.user.id){
+        return res.status(401).json("Unauthorized")
+    }
+
+    const uploadData = {}
+
+    if (title){
+        uploadData.title = title
+    }
+    if(synopsis){
+        uploadData.synopsis = synopsis
+    }
+    // console.log(title, synopsis, text, file)
+    try{
+        const blog = await prisma.blog.update({
+            where: {
+                id: parseInt(blogId)
+            },
+            data: uploadData,
+            include:{
+                passage: true
+            }
+        })
+        if (text) {
+            const updatedPassage = await prisma.passage.update({
+              where: {
+                id: blog.passage[0].id,
+              },
+              data: {
+                text: text,
+              },
+            });
+          }
+        return res.json({
+            message: "Updated Blog"
+        })
+    } catch(e){
+        console.error(e)
+    }
+}
