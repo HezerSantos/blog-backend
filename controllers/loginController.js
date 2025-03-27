@@ -7,6 +7,7 @@ exports.loginUser = [
     validateLogin,
     async(req, res, next) => {
         try {
+            console.log("erm")
             const { username, password} = req.body
             // console.log(username, password)
             const { user, token } = await authenticateUser(username, password)

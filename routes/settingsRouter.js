@@ -3,6 +3,6 @@ const { passport } = require("../config/passport")
 const { updateProfile } = require("../controllers/settingsController")
 const settingsRouter = Router()
 
-settingsRouter.post("/update-profile", passport.authenticate("jwt", {session: false}), updateProfile)
+settingsRouter.put("/update-profile", passport.authenticate("jwt", {session: false}), updateProfile)
 
 module.exports = settingsRouter
