@@ -4,7 +4,7 @@ const allowedOrigins = [
   "http://localhost:5173", 
   "http://127.0.0.1:5173", 
   "https://theywroteit.vercel.app", 
-  "https://blog-frontend-production-4a0c.up.railway.app"
+  "https://theywroteit.up.railway.app"
 ];
 
 const corsOptions = {
