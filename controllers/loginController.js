@@ -16,9 +16,8 @@ exports.loginUser = [
                 httpOnly: true,      // Prevents access to the cookie from JavaScript
                 secure: true, // Use HTTPS in production
                 maxAge: 60 * 60 * 1000, // 1 hour expiration time (can adjust as needed)
-                sameSite: "Lax", // To mitigate CSRF attacks
+                sameSite: "None", // To mitigate CSRF attacks
                 path: "/",
-                domain: "theywroteit.vercel.app"
             });
 
             return res.json({user})
