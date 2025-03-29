@@ -42,7 +42,17 @@ app.post("/logout", (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "None",
+    domain: '.vercel.app',
   });
+
+  res.clearCookie("token", { 
+    path: "/",
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    domain: '.up.railway.app',
+  });
+
   console.log("Looged Out")
   res.json({ message: "Logged out successfully" });
 });
